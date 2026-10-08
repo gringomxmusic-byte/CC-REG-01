@@ -1,5 +1,7 @@
 # CC-REG-01: Open Claim-Checker
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23246074.svg)](https://doi.org/10.5281/zenodo.23246074)
+
 A free, open tool that checks software-backed claims **by examining the evidence itself**, not by trusting labels.
 Python 3.10+, standard library only, no external API.
 
@@ -53,3 +55,7 @@ GODNODE v7.7's CLI, and two invented receipts. It reported zero findings on the 
 the two patterns above and cannot prove code is honest.
 
 Author: Brian Scott Politzer. License: MIT.
+
+## How to cite
+
+Politzer, B. S. (2026). *CC-REG-01: Open Claim-Checker* (v0.2.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.23246074
