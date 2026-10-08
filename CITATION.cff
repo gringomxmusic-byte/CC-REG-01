@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "CC-REG-01: Open Claim-Checker"
+version: 0.2.0
+date-released: 2026-10-08
+authors:
+  - family-names: Politzer
+    given-names: Brian Scott
+repository-code: "https://github.com/gringomxmusic-byte/CC-REG-01"
+license: MIT
+keywords: [verification, reproducibility, research software, mutation testing, provenance]
+abstract: >-
+  Open tool that checks software-backed claims by examining evidence: it flags status
+  literals that are not derived from results, detects hand-typed fake SHA-256 receipts,
+  and recomputes declared file hashes and manifest roots.

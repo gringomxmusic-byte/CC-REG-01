@@ -1,0 +1,84 @@
+{
+  "governance_root": "RTC-114C-5202",
+  "master_kernel": 837912456,
+  "component": "CC-REG-01 — Open Claim-Checker for code-backed scientific claims",
+  "operator": "Brian Scott Politzer",
+  "status": "MODULES_1-2_DEMONSTRATED; MODULES_3-6_SPECIFIED",
+  "scope_correction": "v1 described a news fact-check aggregator (ClaimReview + Google Fact Check Tools API). That can only look up claims journalists have already checked; it cannot test a new scientific or software claim, and it depends on a keyed, rate-limited Google API, so it is not un-gated. v2 checks claims by EXECUTING the evidence. ClaimReview is kept as the OUTPUT format.",
+  "access_tier": "Open source, free; runs locally, no external API required",
+  "pipeline": [
+    {
+      "module": 1,
+      "name": "static_scan",
+      "status": "DEMONSTRATED",
+      "detects": [
+        "HARDCODED_PASS: status literal not derived from results",
+        "PATTERNED_HASH: 'sha256' value that is a hand-typed sequence, not a digest"
+      ]
+    },
+    {
+      "module": 2,
+      "name": "receipt_recompute",
+      "status": "DEMONSTRATED",
+      "does": "recompute every declared hash/manifest root from the files it claims to cover"
+    },
+    {
+      "module": 3,
+      "name": "sandboxed_test_run",
+      "status": "SPECIFIED",
+      "does": "run the project's own tests in isolation; record pass/fail, versions, seeds"
+    },
+    {
+      "module": 4,
+      "name": "mutation_check",
+      "status": "SPECIFIED",
+      "does": "remove each checked condition; a test that still passes is vacuous"
+    },
+    {
+      "module": 5,
+      "name": "evidence_classification",
+      "status": "SPECIFIED",
+      "does": "label each claim Specified / Simulated / Demonstrated / Independently Verified / Hypothesis (HMCR contract)"
+    },
+    {
+      "module": 6,
+      "name": "claimreview_output",
+      "status": "SPECIFIED",
+      "does": "emit schema.org ClaimReview JSON-LD with a machine-readable rating and links to the evidence run"
+    }
+  ],
+  "module_1_evidence": {
+    "true_positives": [
+      "genesis engine v1: 2 literal VERIFIED statuses",
+      "GODNODE v7.7 cli.py:44: PASS chosen by command name only",
+      "CC-REG-01 v1 receipt 3f2e1d0c...: interleaved descending sequence (run 9)",
+      "FM-REG-01 v1 receipt 7c8b9a0f...: interleaved ascending sequence (run 9)"
+    ],
+    "true_negatives": [
+      "GODNODE v7.8 cli.py (repaired): 0 findings",
+      "FM-REG-01 v2 real receipt 1e9f5080...: not flagged"
+    ],
+    "false_positive_rate": "0 / 1,000,000 genuine SHA-256 digests",
+    "known_limit": "heuristic: finds the two patterns above; it cannot prove code honest"
+  },
+  "governance_rule": "A finding is evidence for human review, never an automatic verdict; the checker's own code is open and mutation-tested.",
+  "module_2_evidence": {
+    "real_packages": {
+      "Coherent Accounting 51.0": "19/19 match, root MATCH -> RECEIPTS_VERIFIED",
+      "Coherent Accounting 50.0 (from PDF)": "14/25 match, 11 .pyc MISSING -> RECEIPTS_BROKEN",
+      "GODNODE v7.8": "27/27 match -> RECEIPTS_VERIFIED",
+      "FM-REG-01 v2": "3/3 match -> RECEIPTS_VERIFIED",
+      "CA 51.0 with one planted backdoor line": "keys.py MISMATCH -> RECEIPTS_BROKEN"
+    },
+    "self_tests": "10/10 pass",
+    "mutation_test": "8/8 caught"
+  },
+  "files": {
+    "ccreg_scan.py": "5fd9778d3891d0a11c3b1c676ec691df642a0960882c25812131afaa883a6956",
+    "ccreg_receipts.py": "1709224d6fd326e98730897ab0589dd81114c873c8318d992fcbdec57728e492",
+    "tests/test_ccreg.py": "5b0ff317e131322cf97db618b9b9bba36535a25cffb9a86dec997d1052db77ec",
+    "tests/mutation_test.py": "15bc18a616556fed9a0725a7369d21b9f0d4c56d878f56b143eecf27a310ddb1"
+  },
+  "receipt_sha256": "d7f6a0adc355878db0703c6978df550207b2b3dfedc54d9d45ad6d2f0b82bebc",
+  "receipt_covers": "this spec without receipt fields, including the file hashes in \"files\""
+}
